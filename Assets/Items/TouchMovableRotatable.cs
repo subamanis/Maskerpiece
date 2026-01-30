@@ -12,6 +12,7 @@ public class TouchMovableRotatable : MonoBehaviour
     private float lastRotationAngle;
     private float lastPinchDistance;
     private float cachedZ;
+    private int lastTouchCount;
 
     private void Awake()
     {
@@ -28,6 +29,11 @@ public class TouchMovableRotatable : MonoBehaviour
             return;
         }
 
+        if (lastTouchCount >= 2 && Input.touchCount == 1)
+        {
+            BeginMove(Input.GetTouch(0));
+        }
+
         if (Input.touchCount == 1)
         {
             HandleMove(Input.GetTouch(0));
@@ -41,17 +47,15 @@ public class TouchMovableRotatable : MonoBehaviour
             isMoving = false;
             isRotating = false;
         }
+
+        lastTouchCount = Input.touchCount;
     }
 
     private void HandleMove(Touch touch)
     {
         if (touch.phase == TouchPhase.Began)
         {
-            isRotating = false;
-            cachedZ = transform.position.z;
-            Vector2 hitPoint = ScreenToWorld2D(touch.position);
-            moveOffset = (Vector2)transform.position - hitPoint;
-            isMoving = true;
+            BeginMove(touch);
         }
 
         if (!isMoving)
@@ -110,6 +114,15 @@ public class TouchMovableRotatable : MonoBehaviour
     {
         Vector3 world = targetCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, cachedZ - targetCamera.transform.position.z));
         return new Vector2(world.x, world.y);
+    }
+
+    private void BeginMove(Touch touch)
+    {
+        isRotating = false;
+        cachedZ = transform.position.z;
+        Vector2 hitPoint = ScreenToWorld2D(touch.position);
+        moveOffset = (Vector2)transform.position - hitPoint;
+        isMoving = true;
     }
 
     private static float GetAngleBetweenTouches(Vector2 a, Vector2 b)
