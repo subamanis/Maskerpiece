@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Selectable))]
 public class TouchMovableRotatable : MonoBehaviour
 {
     [SerializeField] private Camera targetCamera;
@@ -13,9 +15,20 @@ public class TouchMovableRotatable : MonoBehaviour
     private float lastPinchDistance;
     private float cachedZ;
     private int lastTouchCount;
+    private Selectable selectable;
+
+    private enum TouchState
+    {
+        Began,
+        Moved,
+        Stationary,
+        Ended,
+        Canceled
+    }
 
     private void Awake()
     {
+        selectable = GetComponent<Selectable>();
         if (targetCamera == null)
         {
             targetCamera = Camera.main;
@@ -29,18 +42,28 @@ public class TouchMovableRotatable : MonoBehaviour
             return;
         }
 
-        if (lastTouchCount >= 2 && Input.touchCount == 1)
+        if (selectable == null || !selectable.IsSelected)
         {
-            BeginMove(Input.GetTouch(0));
+            isMoving = false;
+            isRotating = false;
+            lastTouchCount = 0;
+            return;
         }
 
-        if (Input.touchCount == 1)
+        int touchCount = GetActiveTouches(out TouchInfo touchA, out TouchInfo touchB);
+
+        if (lastTouchCount >= 2 && touchCount == 1)
         {
-            HandleMove(Input.GetTouch(0));
+            BeginMove(touchA);
         }
-        else if (Input.touchCount >= 2)
+
+        if (touchCount == 1)
         {
-            HandleRotation(Input.GetTouch(0), Input.GetTouch(1));
+            HandleMove(touchA);
+        }
+        else if (touchCount >= 2)
+        {
+            HandleRotation(touchA, touchB);
         }
         else
         {
@@ -48,12 +71,12 @@ public class TouchMovableRotatable : MonoBehaviour
             isRotating = false;
         }
 
-        lastTouchCount = Input.touchCount;
+        lastTouchCount = touchCount;
     }
 
-    private void HandleMove(Touch touch)
+    private void HandleMove(TouchInfo touch)
     {
-        if (touch.phase == TouchPhase.Began)
+        if (touch.phase == TouchState.Began)
         {
             BeginMove(touch);
         }
@@ -63,21 +86,21 @@ public class TouchMovableRotatable : MonoBehaviour
             return;
         }
 
-        if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+        if (touch.phase == TouchState.Moved || touch.phase == TouchState.Stationary)
         {
             Vector2 hitPoint = ScreenToWorld2D(touch.position);
             Vector2 newPosition = hitPoint + moveOffset;
             transform.position = new Vector3(newPosition.x, newPosition.y, cachedZ);
         }
-        else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+        else if (touch.phase == TouchState.Ended || touch.phase == TouchState.Canceled)
         {
             isMoving = false;
         }
     }
 
-    private void HandleRotation(Touch touchA, Touch touchB)
+    private void HandleRotation(TouchInfo touchA, TouchInfo touchB)
     {
-        if (!isRotating || touchA.phase == TouchPhase.Began || touchB.phase == TouchPhase.Began)
+        if (!isRotating || touchA.phase == TouchState.Began || touchB.phase == TouchState.Began)
         {
             lastRotationAngle = GetAngleBetweenTouches(touchA.position, touchB.position);
             lastPinchDistance = Vector2.Distance(touchA.position, touchB.position);
@@ -86,7 +109,7 @@ public class TouchMovableRotatable : MonoBehaviour
             return;
         }
 
-        if (touchA.phase == TouchPhase.Moved || touchB.phase == TouchPhase.Moved)
+        if (touchA.phase == TouchState.Moved || touchB.phase == TouchState.Moved)
         {
             float currentAngle = GetAngleBetweenTouches(touchA.position, touchB.position);
             float deltaAngle = Mathf.DeltaAngle(lastRotationAngle, currentAngle);
@@ -103,8 +126,8 @@ public class TouchMovableRotatable : MonoBehaviour
             lastPinchDistance = currentDistance;
         }
 
-        if (touchA.phase == TouchPhase.Ended || touchA.phase == TouchPhase.Canceled ||
-            touchB.phase == TouchPhase.Ended || touchB.phase == TouchPhase.Canceled)
+        if (touchA.phase == TouchState.Ended || touchA.phase == TouchState.Canceled ||
+            touchB.phase == TouchState.Ended || touchB.phase == TouchState.Canceled)
         {
             isRotating = false;
         }
@@ -116,7 +139,7 @@ public class TouchMovableRotatable : MonoBehaviour
         return new Vector2(world.x, world.y);
     }
 
-    private void BeginMove(Touch touch)
+    private void BeginMove(TouchInfo touch)
     {
         isRotating = false;
         cachedZ = transform.position.z;
@@ -129,5 +152,74 @@ public class TouchMovableRotatable : MonoBehaviour
     {
         Vector2 direction = b - a;
         return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    }
+
+    private struct TouchInfo
+    {
+        public Vector2 position;
+        public TouchState phase;
+
+        public TouchInfo(Vector2 position, TouchState phase)
+        {
+            this.position = position;
+            this.phase = phase;
+        }
+    }
+
+    private int GetActiveTouches(out TouchInfo touchA, out TouchInfo touchB)
+    {
+        touchA = default;
+        touchB = default;
+
+        if (Touchscreen.current == null)
+        {
+            return 0;
+        }
+
+        int count = 0;
+        foreach (var touchControl in Touchscreen.current.touches)
+        {
+            if (!touchControl.press.isPressed)
+            {
+                continue;
+            }
+
+            TouchState phase = ConvertInputSystemPhase(touchControl.phase.ReadValue());
+            Vector2 position = touchControl.position.ReadValue();
+            if (count == 0)
+            {
+                touchA = new TouchInfo(position, phase);
+            }
+            else if (count == 1)
+            {
+                touchB = new TouchInfo(position, phase);
+            }
+            count++;
+            if (count >= 2)
+            {
+                break;
+            }
+        }
+
+        return count;
+    }
+
+    private static TouchState ConvertInputSystemPhase(UnityEngine.InputSystem.TouchPhase phase)
+    {
+        switch (phase)
+        {
+            case UnityEngine.InputSystem.TouchPhase.Began:
+                return TouchState.Began;
+            case UnityEngine.InputSystem.TouchPhase.Moved:
+                return TouchState.Moved;
+            case UnityEngine.InputSystem.TouchPhase.Stationary:
+                return TouchState.Stationary;
+            case UnityEngine.InputSystem.TouchPhase.Ended:
+                return TouchState.Ended;
+            case UnityEngine.InputSystem.TouchPhase.Canceled:
+                return TouchState.Canceled;
+            default:
+                return TouchState.Stationary;
+        }
     }
 }
