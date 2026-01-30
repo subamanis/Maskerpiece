@@ -4,8 +4,13 @@ using UnityEngine.InputSystem;
 public class SelectionManager : MonoBehaviour
 {
     [SerializeField] private Camera targetCamera;
+    [SerializeField] private float tapMaxMovement = 12f;
 
     private Selectable currentSelection;
+    private bool pointerActive;
+    private bool pointerMoved;
+    private bool pointerMultiTouch;
+    private Vector2 pointerStartPosition;
 
     private void Awake()
     {
@@ -27,14 +32,67 @@ public class SelectionManager : MonoBehaviour
             int activeTouchCount = GetActiveTouchCount();
             if (activeTouchCount == 1 && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
             {
-                HandleSelection(Touchscreen.current.primaryTouch.position.ReadValue());
+                pointerActive = true;
+                pointerMoved = false;
+                pointerMultiTouch = false;
+                pointerStartPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+                return;
+            }
+
+            if (pointerActive)
+            {
+                Vector2 currentPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+                if (Vector2.Distance(pointerStartPosition, currentPosition) > tapMaxMovement)
+                {
+                    pointerMoved = true;
+                }
+
+                if (activeTouchCount > 1)
+                {
+                    pointerMultiTouch = true;
+                }
+
+                if (Touchscreen.current.primaryTouch.press.wasReleasedThisFrame)
+                {
+                    if (!pointerMoved && !pointerMultiTouch)
+                    {
+                        HandleSelection(currentPosition);
+                    }
+
+                    pointerActive = false;
+                }
+
                 return;
             }
         }
 
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current != null)
         {
-            HandleSelection(Mouse.current.position.ReadValue());
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                pointerActive = true;
+                pointerMoved = false;
+                pointerStartPosition = Mouse.current.position.ReadValue();
+            }
+
+            if (pointerActive && Mouse.current.leftButton.isPressed)
+            {
+                Vector2 currentPosition = Mouse.current.position.ReadValue();
+                if (Vector2.Distance(pointerStartPosition, currentPosition) > tapMaxMovement)
+                {
+                    pointerMoved = true;
+                }
+            }
+
+            if (pointerActive && Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                Vector2 currentPosition = Mouse.current.position.ReadValue();
+                if (!pointerMoved)
+                {
+                    HandleSelection(currentPosition);
+                }
+                pointerActive = false;
+            }
         }
     }
 
