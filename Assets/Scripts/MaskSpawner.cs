@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MaskSpawner : MonoBehaviour
 {
@@ -43,6 +44,14 @@ public class MaskSpawner : MonoBehaviour
                     img.sprite = prefabSR.sprite;
                     img.preserveAspect = true;
                 }
+            }
+
+            Transform priceTransform = buttonObj.transform.Find("Price");
+            if (priceTransform != null)
+            {
+                TextMeshProUGUI priceText = priceTransform.GetComponent<TextMeshProUGUI>();
+                if (priceText != null)
+                    priceText.text = $"${maskItem.price}";
             }
 
             Button btn = buttonObj.GetComponent<Button>();
