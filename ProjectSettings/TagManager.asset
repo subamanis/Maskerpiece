@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: background
+    uniqueID: 717048187
+    locked: 0
+  - name: girl
+    uniqueID: 3091981527
+    locked: 0
   - name: masks
     uniqueID: 3347505341
     locked: 0
