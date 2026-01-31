@@ -110,11 +110,6 @@ public class Selectable : MonoBehaviour
 
     public void NotifyRestCollisionChanged(bool hasCollision)
     {
-        if (LastRestCollision.HasValue && LastRestCollision.Value == hasCollision)
-        {
-            return;
-        }
-
         LastRestCollision = hasCollision;
         OnRestCollisionChanged?.Invoke(hasCollision);
     }

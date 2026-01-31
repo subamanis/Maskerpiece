@@ -22,7 +22,6 @@ public class TouchMovableRotatable : MonoBehaviour
     private Vector3 lastPosition;
     private Vector3 lastScale;
     private Quaternion lastRotation;
-    private bool hasLoggedAtRest;
     private readonly Collider2D[] overlapResults = new Collider2D[16];
     private const float RestEpsilon = 0.0001f;
 
@@ -58,7 +57,6 @@ public class TouchMovableRotatable : MonoBehaviour
             isMoving = false;
             isRotating = false;
             lastTouchCount = 0;
-            hasLoggedAtRest = false;
             CacheTransformState();
             return;
         }
@@ -87,15 +85,7 @@ public class TouchMovableRotatable : MonoBehaviour
         bool isTransformStable = IsTransformStable();
         if (touchCount == 0 && !isMoving && !isRotating && isTransformStable)
         {
-            if (!hasLoggedAtRest)
-            {
-                LogCollisionCheck();
-                hasLoggedAtRest = true;
-            }
-        }
-        else
-        {
-            hasLoggedAtRest = false;
+            LogCollisionCheck();
         }
 
         lastTouchCount = touchCount;
@@ -311,15 +301,19 @@ public class TouchMovableRotatable : MonoBehaviour
         }
 
         bool hasCollision = collisions.Count > 0;
+        bool? previousCollision = selectable.LastRestCollision;
         selectable.NotifyRestCollisionChanged(hasCollision);
 
-        if (hasCollision)
+        if (!previousCollision.HasValue || previousCollision.Value != hasCollision)
         {
-            Debug.Log($"[{timestamp}] Collisions: {string.Join(", ", collisions)}");
-        }
-        else
-        {
-            Debug.Log($"[{timestamp}] No collisions.");
+            if (hasCollision)
+            {
+                Debug.Log($"[{timestamp}] Collisions: {string.Join(", ", collisions)}");
+            }
+            else
+            {
+                Debug.Log($"[{timestamp}] No collisions.");
+            }
         }
     }
 }
