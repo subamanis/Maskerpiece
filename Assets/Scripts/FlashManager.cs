@@ -15,13 +15,15 @@ public class FlashManager : MonoBehaviour
 
     [Header("Screen Flash")]
     public Image screenFlashImage;
-    public float screenFlashChance = 0.2f;
+    public float screenFlashDelay = 0.2f;
+    public float screenFlashCooldown = 0.3f;
     public float screenFlashDuration = 0.08f;
     public float screenFlashOpacity = 0.7f;
 
     private List<GameObject> flashObjects = new List<GameObject>();
     private bool isFlashing;
     private int lastFlashIndex = -1;
+    private float lastScreenFlashTime = -999f;
 
     void Start()
     {
@@ -45,11 +47,21 @@ public class FlashManager : MonoBehaviour
     {
         isFlashing = false;
         StopAllCoroutines();
+
         foreach (var flash in flashObjects)
         {
             if (flash != null)
                 flash.SetActive(false);
         }
+
+        if (screenFlashImage != null)
+        {
+            Color c = screenFlashImage.color;
+            c.a = 0f;
+            screenFlashImage.color = c;
+        }
+
+        lastScreenFlashTime = -999f;
     }
 
     IEnumerator FlashLoop()
@@ -60,11 +72,20 @@ public class FlashManager : MonoBehaviour
             if (!isFlashing) break;
 
             StartCoroutine(DoFlash());
+            StartCoroutine(TriggerScreenFlashDelayed());
+        }
+    }
 
-            if (Random.value < screenFlashChance)
-            {
-                StartCoroutine(ScreenFlash());
-            }
+    IEnumerator TriggerScreenFlashDelayed()
+    {
+        yield return new WaitForSeconds(screenFlashDelay);
+
+        if (!isFlashing) yield break;
+
+        if (Time.time - lastScreenFlashTime >= screenFlashCooldown)
+        {
+            lastScreenFlashTime = Time.time;
+            StartCoroutine(ScreenFlash());
         }
     }
 
