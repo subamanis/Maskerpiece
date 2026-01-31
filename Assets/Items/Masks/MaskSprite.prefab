@@ -168,4 +168,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selectable
   spriteRenderer: {fileID: 0}
-  selectedColor: {r: 0.9811321, g: 0.0774945, b: 0, a: 1}
+  useGlow: 1
+  autoGlowColor: 1
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowAlpha: 0.5
+  glowSize: 10
+  glowIntensity: 5
+  glowPulseAmplitude: 5
+  glowPulseSpeed: 1.2
+  dominantAlphaThreshold: 0.1
+  glowShader: {fileID: 4800000, guid: 8c3184614112ee949939b883bdd53da2, type: 3}

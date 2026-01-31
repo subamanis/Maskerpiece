@@ -1452,7 +1452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 496528904817691893, guid: 52c7e5b7f9fe50f40bb322a5adb6a630, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.3600006
+      value: 4.27
       objectReference: {fileID: 0}
     - target: {fileID: 496528904817691893, guid: 52c7e5b7f9fe50f40bb322a5adb6a630, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2006,6 +2006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SelectionManager
   targetCamera: {fileID: 0}
   tapMaxMovement: 12
+  currentSelection: {fileID: 0}
 --- !u!4 &1087376994
 Transform:
   m_ObjectHideFlags: 0
@@ -2731,6 +2732,10 @@ PrefabInstance:
     - target: {fileID: 2021725035352415994, guid: 52c7e5b7f9fe50f40bb322a5adb6a630, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 9.801284
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957175884165635251, guid: 52c7e5b7f9fe50f40bb322a5adb6a630, type: 3}
+      propertyPath: autoGlowColor
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7195770635393813751, guid: 52c7e5b7f9fe50f40bb322a5adb6a630, type: 3}
       propertyPath: m_Name
