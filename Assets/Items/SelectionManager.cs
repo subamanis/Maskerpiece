@@ -152,4 +152,11 @@ public class SelectionManager : MonoBehaviour
         currentSelection = null;
         Destroy(toDelete);
     }
+
+    public void ResetSelected()
+    {
+        if (currentSelection == null) return;
+        currentSelection.ResetToOriginalTransform();
+    }
+    
 }
