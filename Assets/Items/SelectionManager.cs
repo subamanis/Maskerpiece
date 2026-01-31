@@ -113,7 +113,7 @@ public class SelectionManager : MonoBehaviour
                     return;
             }
         }
-        
+
         Vector3 worldPoint = targetCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0f));
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
         Selectable nextSelection = hit.collider != null ? hit.collider.GetComponentInParent<Selectable>() : null;
@@ -185,5 +185,34 @@ public class SelectionManager : MonoBehaviour
         currentSelection.transform.localScale = currentSelection.DefaultScale;
     }
 
+    public void CloneSelected()
+    {
+        if (currentSelection == null) return;
+
+        Selectable source = currentSelection;
+        Transform sourceT = source.transform;
+
+        GameObject cloneGo = Instantiate(sourceT.gameObject, sourceT.parent);
+
+        // ✅ Ensure Reset uses the ORIGINAL default scale, not the cloned scale
+        Selectable cloneSelectable = cloneGo.GetComponent<Selectable>();
+        if (cloneSelectable != null)
+        {
+            cloneSelectable.SetDefaultScale(source.DefaultScale);
+            cloneSelectable.SetSelected(false);
+        }
+
+        // Match current transform exactly
+        Transform cloneT = cloneGo.transform;
+        cloneT.position = sourceT.position;
+        cloneT.rotation = sourceT.rotation;
+        cloneT.localScale = sourceT.localScale;
+
+        // Optional: select the clone
+        source.SetSelected(false);
+        currentSelection = cloneSelectable;
+        if (currentSelection != null)
+            currentSelection.SetSelected(true);
+    }
 
 }
