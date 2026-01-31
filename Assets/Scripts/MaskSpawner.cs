@@ -21,6 +21,7 @@ public class MaskSpawner : MonoBehaviour
 
     private Camera mainCamera;
     private AudioSource audioSource;
+    private int nextSortingOrder = 1;
 
     void Start()
     {
@@ -92,6 +93,12 @@ public class MaskSpawner : MonoBehaviour
         spawnPos.z = 0f;
 
         GameObject instance = Instantiate(maskItem.prefab.gameObject, spawnPos, Quaternion.identity);
+        SpriteRenderer instanceSR = instance.GetComponentInChildren<SpriteRenderer>();
+        if (instanceSR != null)
+        {
+            instanceSR.sortingOrder = nextSortingOrder;
+            nextSortingOrder++;
+        }
 
         if (spawnParent != null)
         {

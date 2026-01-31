@@ -47,6 +47,6 @@ public class BudgetManager : MonoBehaviour
     void UpdateUI()
     {
         if (budgetText != null)
-            budgetText.text = $"${currentBudget}";
+            budgetText.text = currentBudget.ToString();
     }
 }
