@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -27,6 +28,8 @@ public class Selectable : MonoBehaviour
     private static readonly int GlowSizeId = Shader.PropertyToID("_GlowSize");
 
     public bool IsSelected { get; private set; }
+    public event Action<bool> OnRestCollisionChanged;
+    public bool? LastRestCollision { get; private set; }
 
     private Vector3 defaultScale;
     private bool defaultScaleInitialized;
@@ -79,6 +82,10 @@ public class Selectable : MonoBehaviour
         if (IsSelected == selected) return;
 
         IsSelected = selected;
+        if (!selected)
+        {
+            LastRestCollision = null;
+        }
         if (spriteRenderer != null && !selected)
         {
             spriteRenderer.color = defaultColor;
@@ -99,6 +106,17 @@ public class Selectable : MonoBehaviour
         {
             RestoreOriginalMaterial();
         }
+    }
+
+    public void NotifyRestCollisionChanged(bool hasCollision)
+    {
+        if (LastRestCollision.HasValue && LastRestCollision.Value == hasCollision)
+        {
+            return;
+        }
+
+        LastRestCollision = hasCollision;
+        OnRestCollisionChanged?.Invoke(hasCollision);
     }
 
     private void EnsureGlowMaterial()

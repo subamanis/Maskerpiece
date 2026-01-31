@@ -441,7 +441,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 380077647}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1008254484}
+        m_TargetAssemblyTypeName: BottomActionBarController, Assembly-CSharp
+        m_MethodName: OnLayerUpPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &380077647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1911,6 +1923,7 @@ MonoBehaviour:
   tapMaxMovement: 12
   currentSelection: {fileID: 0}
   centerDepth: 0
+  cloneOffset: {x: 0.5, y: -0.5}
 --- !u!4 &1087376994
 Transform:
   m_ObjectHideFlags: 0
@@ -2008,7 +2021,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2009257331}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1008254484}
+        m_TargetAssemblyTypeName: BottomActionBarController, Assembly-CSharp
+        m_MethodName: OnLayerDownPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2009257331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,13 +2221,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaskSprite (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5218866514617288981, guid: 4b66652d6e736fd4291a7d5d4b7836e7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5302737872765549209, guid: 4b66652d6e736fd4291a7d5d4b7836e7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 5302737872765549209, guid: 4b66652d6e736fd4291a7d5d4b7836e7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.47
+      value: -1.31
       objectReference: {fileID: 0}
     - target: {fileID: 5302737872765549209, guid: 4b66652d6e736fd4291a7d5d4b7836e7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2249,13 +2278,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 783285233}
     m_Modifications:
+    - target: {fileID: 1473022490432658711, guid: d34473abaf5d59946b021003a85af557, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1552340368427904667, guid: d34473abaf5d59946b021003a85af557, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 1552340368427904667, guid: d34473abaf5d59946b021003a85af557, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.22
       objectReference: {fileID: 0}
     - target: {fileID: 1552340368427904667, guid: d34473abaf5d59946b021003a85af557, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2306,13 +2339,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 783285233}
     m_Modifications:
+    - target: {fileID: 3900009375963055194, guid: f99ca85d2562ebc41a6a6fdc4c4b3980, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4027804305468307414, guid: f99ca85d2562ebc41a6a6fdc4c4b3980, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.14
       objectReference: {fileID: 0}
     - target: {fileID: 4027804305468307414, guid: f99ca85d2562ebc41a6a6fdc4c4b3980, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.27
+      value: -2.19
       objectReference: {fileID: 0}
     - target: {fileID: 4027804305468307414, guid: f99ca85d2562ebc41a6a6fdc4c4b3980, type: 3}
       propertyPath: m_LocalPosition.z

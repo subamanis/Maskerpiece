@@ -310,7 +310,10 @@ public class TouchMovableRotatable : MonoBehaviour
             }
         }
 
-        if (collisions.Count > 0)
+        bool hasCollision = collisions.Count > 0;
+        selectable.NotifyRestCollisionChanged(hasCollision);
+
+        if (hasCollision)
         {
             Debug.Log($"[{timestamp}] Collisions: {string.Join(", ", collisions)}");
         }

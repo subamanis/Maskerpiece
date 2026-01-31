@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
+using System.Collections.Generic;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class SelectionManager : MonoBehaviour
 
     public Selectable currentSelection;
     public event Action<Selectable> OnSelectionChanged;
+
+    private readonly Collider2D[] overlapResults = new Collider2D[16];
+    private readonly List<Selectable> collisionBuffer = new List<Selectable>(8);
 
     private bool pointerActive;
     private bool pointerMoved;
@@ -223,6 +227,172 @@ public class SelectionManager : MonoBehaviour
         currentSelection = cloneSelectable;
         if (currentSelection != null)
             currentSelection.SetSelected(true);
+    }
+
+    public bool TrySwapWithAdjacentCollision(Selectable selection, bool isUp)
+    {
+        if (selection == null)
+        {
+            return false;
+        }
+
+        Selectable target = GetAdjacentCollisionSelectable(selection, isUp);
+        if (target == null)
+        {
+            return false;
+        }
+
+        SpriteRenderer currentRenderer = selection.GetComponentInChildren<SpriteRenderer>();
+        SpriteRenderer targetRenderer = target.GetComponentInChildren<SpriteRenderer>();
+        if (currentRenderer == null || targetRenderer == null)
+        {
+            return false;
+        }
+
+        int currentOrder = currentRenderer.sortingOrder;
+        int targetOrder = targetRenderer.sortingOrder;
+        currentRenderer.sortingOrder = targetOrder;
+        targetRenderer.sortingOrder = currentOrder;
+        return true;
+    }
+
+    public void GetAdjacentCollisionAvailability(Selectable selection, out bool hasAbove, out bool hasBelow)
+    {
+        hasAbove = false;
+        hasBelow = false;
+
+        if (selection == null || !HasRestCollisions(selection))
+        {
+            return;
+        }
+
+        CollectCollisionSelectables(selection, collisionBuffer);
+        if (collisionBuffer.Count == 0)
+        {
+            return;
+        }
+
+        SpriteRenderer currentRenderer = selection.GetComponentInChildren<SpriteRenderer>();
+        if (currentRenderer == null)
+        {
+            return;
+        }
+
+        int currentOrder = currentRenderer.sortingOrder;
+        foreach (Selectable selectable in collisionBuffer)
+        {
+            SpriteRenderer renderer = selectable.GetComponentInChildren<SpriteRenderer>();
+            if (renderer == null)
+            {
+                continue;
+            }
+
+            int order = renderer.sortingOrder;
+            if (order > currentOrder)
+            {
+                hasAbove = true;
+            }
+            else if (order < currentOrder)
+            {
+                hasBelow = true;
+            }
+        }
+    }
+
+    private Selectable GetAdjacentCollisionSelectable(Selectable selection, bool isUp)
+    {
+        if (!HasRestCollisions(selection))
+        {
+            return null;
+        }
+
+        CollectCollisionSelectables(selection, collisionBuffer);
+        if (collisionBuffer.Count == 0)
+        {
+            return null;
+        }
+
+        SpriteRenderer currentRenderer = selection.GetComponentInChildren<SpriteRenderer>();
+        if (currentRenderer == null)
+        {
+            return null;
+        }
+
+        int currentOrder = currentRenderer.sortingOrder;
+        Selectable best = null;
+        int bestOrder = isUp ? int.MaxValue : int.MinValue;
+
+        foreach (Selectable selectable in collisionBuffer)
+        {
+            SpriteRenderer renderer = selectable.GetComponentInChildren<SpriteRenderer>();
+            if (renderer == null)
+            {
+                continue;
+            }
+
+            int order = renderer.sortingOrder;
+            if (isUp)
+            {
+                if (order > currentOrder && order < bestOrder)
+                {
+                    best = selectable;
+                    bestOrder = order;
+                }
+            }
+            else
+            {
+                if (order < currentOrder && order > bestOrder)
+                {
+                    best = selectable;
+                    bestOrder = order;
+                }
+            }
+        }
+
+        return best;
+    }
+
+    private bool HasRestCollisions(Selectable selection)
+    {
+        return selection != null
+               && selection.LastRestCollision.HasValue
+               && selection.LastRestCollision.Value;
+    }
+
+    private void CollectCollisionSelectables(Selectable selection, List<Selectable> results)
+    {
+        results.Clear();
+        if (selection == null)
+        {
+            return;
+        }
+
+        Collider2D collider = selection.GetComponent<Collider2D>();
+        if (collider == null)
+        {
+            return;
+        }
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useTriggers = true;
+        filter.SetLayerMask(Physics2D.AllLayers);
+        filter.SetDepth(float.NegativeInfinity, float.PositiveInfinity);
+        int count = collider.Overlap(filter, overlapResults);
+
+        for (int i = 0; i < count; i++)
+        {
+            Collider2D hit = overlapResults[i];
+            if (hit == null || hit == collider)
+            {
+                continue;
+            }
+
+            Selectable otherSelectable = hit.GetComponentInParent<Selectable>();
+            if (otherSelectable != null && otherSelectable != selection && !results.Contains(otherSelectable))
+            {
+                results.Add(otherSelectable);
+            }
+        }
     }
 
 }
