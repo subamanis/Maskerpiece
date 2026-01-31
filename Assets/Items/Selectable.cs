@@ -29,6 +29,7 @@ public class Selectable : MonoBehaviour
     public bool IsSelected { get; private set; }
 
     private Vector3 defaultScale;
+    private bool defaultScaleInitialized;
 
     private void Awake()
     {
@@ -47,7 +48,12 @@ public class Selectable : MonoBehaviour
     private void Start()
     {
         // Capture after all Awake() calls in the scene
-        defaultScale = transform.localScale;
+        // ✅ Only capture if not already set (e.g., for clones)
+        if (!defaultScaleInitialized)
+        {
+            defaultScale = transform.localScale;
+            defaultScaleInitialized = true;
+        }
     }
 
     private void Update()
@@ -60,6 +66,13 @@ public class Selectable : MonoBehaviour
         ApplyGlowProperties();
     }
     public Vector3 DefaultScale => defaultScale;
+
+    // ✅ Use this for clones to preserve original's default scale
+    public void SetDefaultScale(Vector3 scale)
+    {
+        defaultScale = scale;
+        defaultScaleInitialized = true;
+    }
 
     public void SetSelected(bool selected)
     {
@@ -198,10 +211,4 @@ public class Selectable : MonoBehaviour
         return new Color(1f - color.r, 1f - color.g, 1f - color.b, color.a);
     }
 
-    private void OnDestroy()
-    {
-        // (Optional) Not really needed, but harmless
-        if (IsSelected)
-            SetSelected(false);
-    }
 }
