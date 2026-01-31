@@ -26,4 +26,15 @@ public class BottomActionBarController : MonoBehaviour
         selectionManager.ResetSelected();
     }
 
+    public void OnClonePressed()
+    {
+        if (selectionManager == null)
+        {
+            Debug.LogWarning("SelectionManager reference not set.");
+            return;
+        }
+
+        selectionManager.CloneSelected();
+    }
+
 }

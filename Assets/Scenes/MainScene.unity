@@ -287,7 +287,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Selectable
   spriteRenderer: {fileID: 0}
-  selectedColor: {r: 1, g: 1, b: 0.6, a: 1}
+  useGlow: 1
+  autoGlowColor: 1
+  glowColor: {r: 1, g: 0.8, b: 0.2, a: 1}
+  glowAlpha: 0.7
+  glowSize: 2
+  glowIntensity: 1
+  glowPulseAmplitude: 0.35
+  glowPulseSpeed: 2
+  dominantAlphaThreshold: 0.1
+  glowShader: {fileID: 0}
 --- !u!1 &284647178
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,7 +860,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   spriteRenderer: {fileID: 0}
-  selectedColor: {r: 1, g: 1, b: 0.6, a: 1}
+  useGlow: 1
+  autoGlowColor: 1
+  glowColor: {r: 1, g: 0.8, b: 0.2, a: 1}
+  glowAlpha: 0.7
+  glowSize: 2
+  glowIntensity: 1
+  glowPulseAmplitude: 0.35
+  glowPulseSpeed: 2
+  dominantAlphaThreshold: 0.1
+  glowShader: {fileID: 0}
 --- !u!1 &895665842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,7 +1301,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1028159963}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1084333348}
+        m_TargetAssemblyTypeName: BottomActionBarController, Assembly-CSharp
+        m_MethodName: OnClonePressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1028159963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,6 +1505,7 @@ MonoBehaviour:
   targetCamera: {fileID: 0}
   tapMaxMovement: 12
   currentSelection: {fileID: 0}
+  centerDepth: 0
 --- !u!4 &1087376994
 Transform:
   m_ObjectHideFlags: 0
