@@ -50,6 +50,9 @@ TagManager:
   - name: masks
     uniqueID: 3347505341
     locked: 0
+  - name: effects
+    uniqueID: 3730039415
+    locked: 0
   m_RenderingLayers:
   - Default
   - masks
