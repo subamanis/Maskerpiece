@@ -20,7 +20,6 @@ public class SelectionManager : MonoBehaviour
     private bool pointerMultiTouch;
     private Vector2 pointerStartPosition;
     [SerializeField] private float centerDepth = 0f; // for 2D: use object's Z, or 0
-    [SerializeField] private Vector2 cloneOffset = new Vector2(0.5f, -0.5f);
 
 
     private void Awake()
@@ -170,6 +169,16 @@ public class SelectionManager : MonoBehaviour
     {
         if (currentSelection == null) return;
 
+        MaskPurchase purchase = currentSelection.GetComponent<MaskPurchase>();
+        if (purchase != null && BudgetManager.Instance != null)
+        {
+            int refundAmount = purchase.RefundAmount;
+            if (refundAmount > 0)
+            {
+                BudgetManager.Instance.AddMoney(refundAmount);
+            }
+        }
+
         var toDelete = currentSelection.gameObject;
         currentSelection = null;
         Destroy(toDelete);
@@ -197,36 +206,6 @@ public class SelectionManager : MonoBehaviour
         currentSelection.transform.position = centerWorld;
         currentSelection.transform.rotation = Quaternion.identity;
         currentSelection.transform.localScale = currentSelection.DefaultScale;
-    }
-
-    public void CloneSelected()
-    {
-        if (currentSelection == null) return;
-
-        Selectable source = currentSelection;
-        Transform sourceT = source.transform;
-
-        GameObject cloneGo = Instantiate(sourceT.gameObject, sourceT.parent);
-
-        // ✅ Ensure Reset uses the ORIGINAL default scale, not the cloned scale
-        Selectable cloneSelectable = cloneGo.GetComponent<Selectable>();
-        if (cloneSelectable != null)
-        {
-            cloneSelectable.SetDefaultScale(source.DefaultScale);
-            cloneSelectable.SetSelected(false);
-        }
-
-        // Match current transform exactly
-        Transform cloneT = cloneGo.transform;
-        cloneT.position = sourceT.position + new Vector3(cloneOffset.x, cloneOffset.y, 0f);
-        cloneT.rotation = sourceT.rotation;
-        cloneT.localScale = sourceT.localScale;
-
-        // Optional: select the clone
-        source.SetSelected(false);
-        currentSelection = cloneSelectable;
-        if (currentSelection != null)
-            currentSelection.SetSelected(true);
     }
 
     public bool TrySwapWithAdjacentCollision(Selectable selection, bool isUp)

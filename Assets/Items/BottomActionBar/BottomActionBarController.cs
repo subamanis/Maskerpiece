@@ -6,7 +6,6 @@ public class BottomActionBarController : MonoBehaviour
     [SerializeField] private SelectionManager selectionManager;
 
     [Header("Action Buttons")]
-    [SerializeField] private Button cloneButton;
     [SerializeField] private Button deleteButton;
     [SerializeField] private Button resetButton;
     [SerializeField] private Button upButton;
@@ -66,7 +65,6 @@ public class BottomActionBarController : MonoBehaviour
 
     private void SetActionButtonsInteractable(bool enabled)
     {
-        if (cloneButton != null) cloneButton.interactable = enabled;
         if (deleteButton != null) deleteButton.interactable = enabled;
         if (resetButton != null) resetButton.interactable = enabled;
     }
@@ -75,12 +73,6 @@ public class BottomActionBarController : MonoBehaviour
     {
         if (upButton != null) upButton.interactable = enabled;
         if (downButton != null) downButton.interactable = enabled;
-    }
-
-    public void OnClonePressed()
-    {
-        if (selectionManager == null) return;
-        selectionManager.CloneSelected();
     }
 
     public void OnDeletePressed()

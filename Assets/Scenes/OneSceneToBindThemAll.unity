@@ -1351,7 +1351,6 @@ MonoBehaviour:
   tapMaxMovement: 12
   currentSelection: {fileID: 0}
   centerDepth: 0
-  cloneOffset: {x: 0.5, y: -0.5}
 --- !u!4 &1087376994
 Transform:
   m_ObjectHideFlags: 0

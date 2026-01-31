@@ -16,7 +16,7 @@ public class MaskSpawner : MonoBehaviour
     [Header("Audio")] public AudioClip purchaseSound;
     public AudioClip cantAffordSound;
 
-    private int spawnMod = 7;
+    private int spawnMod = 15;
     private AudioSource audioSource;
     private int nextSortingOrder = 0;
 
@@ -93,6 +93,13 @@ public class MaskSpawner : MonoBehaviour
         spawnPos += offset;
 
         GameObject instance = Instantiate(maskItem.prefab.gameObject, spawnPos, Quaternion.identity);
+        MaskPurchase purchase = instance.GetComponent<MaskPurchase>();
+        if (purchase == null)
+        {
+            purchase = instance.AddComponent<MaskPurchase>();
+        }
+        purchase.SetRefundAmount(maskItem.price);
+
         SpriteRenderer instanceSR = instance.GetComponentInChildren<SpriteRenderer>();
         instanceSR.sortingOrder = nextSortingOrder;
 
