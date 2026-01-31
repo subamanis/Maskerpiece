@@ -16,6 +16,7 @@ public class SelectionManager : MonoBehaviour
     private bool pointerMultiTouch;
     private Vector2 pointerStartPosition;
     [SerializeField] private float centerDepth = 0f; // for 2D: use object's Z, or 0
+    [SerializeField] private Vector2 cloneOffset = new Vector2(0.5f, -0.5f);
 
 
     private void Awake()
@@ -213,7 +214,7 @@ public class SelectionManager : MonoBehaviour
 
         // Match current transform exactly
         Transform cloneT = cloneGo.transform;
-        cloneT.position = sourceT.position;
+        cloneT.position = sourceT.position + new Vector3(cloneOffset.x, cloneOffset.y, 0f);
         cloneT.rotation = sourceT.rotation;
         cloneT.localScale = sourceT.localScale;
 
