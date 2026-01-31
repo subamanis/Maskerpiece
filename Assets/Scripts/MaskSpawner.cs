@@ -13,6 +13,7 @@ public class MaskSpawner : MonoBehaviour
 
     [Header("Spawn Settings")]
     public Transform spawnParent;
+    public float spawnScale = 1f;
 
     [Header("Audio")]
     public AudioClip purchaseSound;
@@ -69,6 +70,8 @@ public class MaskSpawner : MonoBehaviour
                 btn.onClick.AddListener(() => TrySpawnMask(captured));
             }
         }
+        
+        Destroy( buttonTemplate.gameObject);
     }
 
     void TrySpawnMask(MaskItem maskItem)
@@ -91,6 +94,9 @@ public class MaskSpawner : MonoBehaviour
         GameObject instance = Instantiate(maskItem.prefab.gameObject, spawnPos, Quaternion.identity);
 
         if (spawnParent != null)
+        {
             instance.transform.SetParent(spawnParent, true);
+            instance.transform.localScale = Vector3.one * spawnScale;
+        }
     }
 }
