@@ -26,6 +26,13 @@ public class GameManager : MonoBehaviour
     [Header("Effects")]
     public FlashManager flashManager;
 
+    [Header("Audio")]
+    public AudioClip curtainsSound;
+    public AudioClip footstepSound;
+    public AudioClip chatterSound;
+
+    private AudioSource audioSource;
+    private AudioSource chatterSource;
     private bool isWalking;
     private float walkTimer;
     private bool showingGirl1 = true;
@@ -39,6 +46,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        chatterSource = gameObject.AddComponent<AudioSource>();
+        chatterSource.loop = true;
+
         if (curtainLeft != null && curtainRight != null)
         {
             curtainLeftOpenPos = curtainLeft.position;
@@ -69,6 +83,12 @@ public class GameManager : MonoBehaviour
         walkTimer = 0f;
         stepTimer = 0f;
 
+        if (chatterSound != null)
+        {
+            chatterSource.clip = chatterSound;
+            chatterSource.Play();
+        }
+
         if (flashManager != null)
             flashManager.StartFlashing();
     }
@@ -92,6 +112,9 @@ public class GameManager : MonoBehaviour
             showingGirl1 = !showingGirl1;
             girlBack1.SetActive(showingGirl1);
             girlBack2.SetActive(!showingGirl1);
+
+            if (footstepSound != null)
+                audioSource.PlayOneShot(footstepSound);
         }
 
         if (walkTimer >= walkDuration)
@@ -113,9 +136,17 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CurtainTransition()
     {
+        if (curtainsSound != null)
+            audioSource.PlayOneShot(curtainsSound);
+
         yield return StartCoroutine(MoveCurtains(curtainLeftOpenPos, curtainLeftClosedPos, curtainRightOpenPos, curtainRightClosedPos));
 
+        chatterSource.Stop();
+
         yield return new WaitForSeconds(curtainClosedWait);
+
+        if (curtainsSound != null)
+            audioSource.PlayOneShot(curtainsSound);
 
         yield return StartCoroutine(MoveCurtains(curtainLeftClosedPos, curtainLeftOpenPos, curtainRightClosedPos, curtainRightOpenPos));
 

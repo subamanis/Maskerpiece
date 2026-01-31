@@ -12,6 +12,10 @@ public class DrawerController : MonoBehaviour
     [Header("Animation")]
     public float animationDuration = 0.3f;
 
+    [Header("Audio")]
+    public AudioClip drawerSound;
+
+    private AudioSource audioSource;
     private bool isOpen;
     private bool isAnimating;
     private float closedX;
@@ -22,6 +26,10 @@ public class DrawerController : MonoBehaviour
     void Start()
     {
         if (drawerPanel == null) return;
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
 
         float panelWidth = drawerPanel.sizeDelta.x;
         closedX = drawerPanel.anchoredPosition.x;
@@ -42,6 +50,10 @@ public class DrawerController : MonoBehaviour
     public void ToggleDrawer()
     {
         if (isAnimating) return;
+
+        if (drawerSound != null)
+            audioSource.PlayOneShot(drawerSound);
+
         StartCoroutine(AnimateDrawer(!isOpen));
     }
 
