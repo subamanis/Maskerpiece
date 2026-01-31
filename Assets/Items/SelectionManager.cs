@@ -12,6 +12,8 @@ public class SelectionManager : MonoBehaviour
     private bool pointerMoved;
     private bool pointerMultiTouch;
     private Vector2 pointerStartPosition;
+    [SerializeField] private float centerDepth = 0f; // for 2D: use object's Z, or 0
+
 
     private void Awake()
     {
@@ -99,10 +101,19 @@ public class SelectionManager : MonoBehaviour
 
     private void HandleSelection(Vector2 screenPosition)
     {
-        // Don't select objects when the pointer is interacting with UI
-        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            return;
+        if (EventSystem.current != null)
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
 
+            if (Touchscreen.current != null)
+            {
+                int touchId = Touchscreen.current.primaryTouch.touchId.ReadValue();
+                if (EventSystem.current.IsPointerOverGameObject(touchId))
+                    return;
+            }
+        }
+        
         Vector3 worldPoint = targetCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0f));
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
         Selectable nextSelection = hit.collider != null ? hit.collider.GetComponentInParent<Selectable>() : null;
@@ -155,8 +166,24 @@ public class SelectionManager : MonoBehaviour
 
     public void ResetSelected()
     {
-        if (currentSelection == null) return;
-        currentSelection.ResetToOriginalTransform();
+        if (currentSelection == null || targetCamera == null) return;
+
+        // Choose the depth to compute the camera-plane intersection.
+        // For ortho cameras, this doesn't matter much; for perspective, it does.
+        float depth = centerDepth;
+
+        // If you want "same plane as the object", you can do:
+        // depth = Mathf.Abs(currentSelection.transform.position.z - targetCamera.transform.position.z);
+
+        Vector3 centerWorld = targetCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, depth));
+
+        // Keep object on its original Z plane (common for 2D)
+        centerWorld.z = currentSelection.transform.position.z;
+
+        currentSelection.transform.position = centerWorld;
+        currentSelection.transform.rotation = Quaternion.identity;
+        currentSelection.transform.localScale = currentSelection.DefaultScale;
     }
-    
+
+
 }

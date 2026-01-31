@@ -28,36 +28,26 @@ public class Selectable : MonoBehaviour
 
     public bool IsSelected { get; private set; }
 
-    // ✅ ORIGINAL TRANSFORM SNAPSHOT
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
-    private Vector3 initialScale;
+    private Vector3 defaultScale;
 
     private void Awake()
     {
         if (spriteRenderer == null)
-        {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
 
-        if (spriteRenderer != null)
-        {
+        if (spriteRenderer != null){
             defaultColor = spriteRenderer.color;
             originalMaterial = spriteRenderer.sharedMaterial;
             propertyBlock = new MaterialPropertyBlock();
         }
         else
-        {
             Debug.LogWarning($"Selectable on {name} has no SpriteRenderer assigned.");
-        }
     }
 
     private void Start()
     {
-        // ✅ Capture after all Awake() calls in the scene
-        initialPosition = transform.position;
-        initialRotation = transform.rotation;
-        initialScale = transform.localScale;
+        // Capture after all Awake() calls in the scene
+        defaultScale = transform.localScale;
     }
 
     private void Update()
@@ -69,13 +59,11 @@ public class Selectable : MonoBehaviour
 
         ApplyGlowProperties();
     }
+    public Vector3 DefaultScale => defaultScale;
 
     public void SetSelected(bool selected)
     {
-        if (IsSelected == selected)
-        {
-            return;
-        }
+        if (IsSelected == selected) return;
 
         IsSelected = selected;
         if (spriteRenderer != null && !selected)
@@ -212,18 +200,8 @@ public class Selectable : MonoBehaviour
 
     private void OnDestroy()
     {
+        // (Optional) Not really needed, but harmless
         if (IsSelected)
-        {
             SetSelected(false);
-        }
     }
-
-    // ✅ RESET API (call this from your button)
-    public void ResetToOriginalTransform()
-    {
-        transform.position = initialPosition;
-        transform.rotation = initialRotation;
-        transform.localScale = initialScale;
-    }
-
 }
