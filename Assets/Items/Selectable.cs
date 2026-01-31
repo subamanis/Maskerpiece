@@ -35,7 +35,7 @@ public class Selectable : MonoBehaviour
         if (spriteRenderer == null)
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        if (spriteRenderer != null)
+        if (spriteRenderer != null){
             defaultColor = spriteRenderer.color;
             originalMaterial = spriteRenderer.sharedMaterial;
             propertyBlock = new MaterialPropertyBlock();
