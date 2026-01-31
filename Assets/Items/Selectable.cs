@@ -28,6 +28,11 @@ public class Selectable : MonoBehaviour
 
     public bool IsSelected { get; private set; }
 
+    // ✅ ORIGINAL TRANSFORM SNAPSHOT
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+    private Vector3 initialScale;
+
     private void Awake()
     {
         if (spriteRenderer == null)
@@ -45,6 +50,14 @@ public class Selectable : MonoBehaviour
         {
             Debug.LogWarning($"Selectable on {name} has no SpriteRenderer assigned.");
         }
+    }
+
+    private void Start()
+    {
+        // ✅ Capture after all Awake() calls in the scene
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+        initialScale = transform.localScale;
     }
 
     private void Update()
@@ -196,4 +209,21 @@ public class Selectable : MonoBehaviour
     {
         return new Color(1f - color.r, 1f - color.g, 1f - color.b, color.a);
     }
+
+    private void OnDestroy()
+    {
+        if (IsSelected)
+        {
+            SetSelected(false);
+        }
+    }
+
+    // ✅ RESET API (call this from your button)
+    public void ResetToOriginalTransform()
+    {
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
+        transform.localScale = initialScale;
+    }
+
 }
