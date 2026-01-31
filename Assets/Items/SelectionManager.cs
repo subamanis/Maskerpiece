@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private float tapMaxMovement = 12f;
 
     public Selectable currentSelection;
+    public event Action<Selectable> OnSelectionChanged;
+
     private bool pointerActive;
     private bool pointerMoved;
     private bool pointerMultiTouch;
@@ -134,6 +137,9 @@ public class SelectionManager : MonoBehaviour
         {
             currentSelection.SetSelected(true);
         }
+
+        // 🔔 Notify listeners (UI, etc.)
+        OnSelectionChanged?.Invoke(currentSelection);
     }
 
     private static int GetActiveTouchCount()
@@ -162,6 +168,9 @@ public class SelectionManager : MonoBehaviour
         var toDelete = currentSelection.gameObject;
         currentSelection = null;
         Destroy(toDelete);
+
+        // 🔔 Notify listeners that nothing is selected
+        OnSelectionChanged?.Invoke(null);
     }
 
     public void ResetSelected()
