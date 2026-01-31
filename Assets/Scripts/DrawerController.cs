@@ -6,6 +6,7 @@ public class DrawerController : MonoBehaviour
 {
     [Header("References")]
     public RectTransform drawerPanel;
+    public RectTransform drawerButtonRect;
     public Button drawerButton;
 
     [Header("Animation")]
@@ -15,6 +16,8 @@ public class DrawerController : MonoBehaviour
     private bool isAnimating;
     private float closedX;
     private float openX;
+    private float buttonClosedX;
+    private float buttonOpenX;
 
     void Start()
     {
@@ -23,6 +26,12 @@ public class DrawerController : MonoBehaviour
         float panelWidth = drawerPanel.sizeDelta.x;
         closedX = drawerPanel.anchoredPosition.x;
         openX = closedX - panelWidth;
+
+        if (drawerButtonRect != null)
+        {
+            buttonClosedX = drawerButtonRect.anchoredPosition.x;
+            buttonOpenX = buttonClosedX - panelWidth;
+        }
 
         isOpen = false;
 
@@ -43,6 +52,9 @@ public class DrawerController : MonoBehaviour
         float startX = drawerPanel.anchoredPosition.x;
         float endX = opening ? openX : closedX;
 
+        float buttonStartX = drawerButtonRect != null ? drawerButtonRect.anchoredPosition.x : 0f;
+        float buttonEndX = opening ? buttonOpenX : buttonClosedX;
+
         float elapsed = 0f;
         while (elapsed < animationDuration)
         {
@@ -54,12 +66,26 @@ public class DrawerController : MonoBehaviour
             pos.x = Mathf.Lerp(startX, endX, t);
             drawerPanel.anchoredPosition = pos;
 
+            if (drawerButtonRect != null)
+            {
+                Vector2 btnPos = drawerButtonRect.anchoredPosition;
+                btnPos.x = Mathf.Lerp(buttonStartX, buttonEndX, t);
+                drawerButtonRect.anchoredPosition = btnPos;
+            }
+
             yield return null;
         }
 
         Vector2 finalPos = drawerPanel.anchoredPosition;
         finalPos.x = endX;
         drawerPanel.anchoredPosition = finalPos;
+
+        if (drawerButtonRect != null)
+        {
+            Vector2 btnFinalPos = drawerButtonRect.anchoredPosition;
+            btnFinalPos.x = buttonEndX;
+            drawerButtonRect.anchoredPosition = btnFinalPos;
+        }
 
         isOpen = opening;
         isAnimating = false;
