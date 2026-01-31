@@ -14,11 +14,19 @@ public class MaskSpawner : MonoBehaviour
     [Header("Spawn Settings")]
     public Transform spawnParent;
 
+    [Header("Audio")]
+    public AudioClip purchaseSound;
+    public AudioClip cantAffordSound;
+
     private Camera mainCamera;
+    private AudioSource audioSource;
 
     void Start()
     {
         mainCamera = Camera.main;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
         PopulateDrawer();
     }
 
@@ -65,8 +73,17 @@ public class MaskSpawner : MonoBehaviour
 
     void TrySpawnMask(MaskItem maskItem)
     {
-        if (BudgetManager.Instance == null || !BudgetManager.Instance.TrySpend(maskItem.price))
+        if (BudgetManager.Instance == null || !BudgetManager.Instance.CanAfford(maskItem.price))
+        {
+            if (cantAffordSound != null)
+                audioSource.PlayOneShot(cantAffordSound);
             return;
+        }
+
+        BudgetManager.Instance.TrySpend(maskItem.price);
+
+        if (purchaseSound != null)
+            audioSource.PlayOneShot(purchaseSound);
 
         Vector3 spawnPos = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 10f));
         spawnPos.z = 0f;

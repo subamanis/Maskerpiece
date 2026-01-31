@@ -20,13 +20,21 @@ public class FlashManager : MonoBehaviour
     public float screenFlashDuration = 0.08f;
     public float screenFlashOpacity = 0.7f;
 
+    [Header("Audio")]
+    public AudioClip flashSound;
+
     private List<GameObject> flashObjects = new List<GameObject>();
+    private AudioSource audioSource;
     private bool isFlashing;
     private int lastFlashIndex = -1;
     private float lastScreenFlashTime = -999f;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
         if (paparazzisParent != null)
         {
             foreach (Transform child in paparazzisParent)
@@ -109,6 +117,9 @@ public class FlashManager : MonoBehaviour
 
         GameObject flash = flashObjects[index];
         if (flash == null) yield break;
+
+        if (flashSound != null)
+            audioSource.PlayOneShot(flashSound);
 
         SpriteRenderer sr = flash.GetComponent<SpriteRenderer>();
         Vector3 originalScale = flash.transform.localScale;
