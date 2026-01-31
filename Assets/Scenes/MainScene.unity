@@ -200,7 +200,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -947461955
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Back
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -749,7 +749,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -947461955
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Delete
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1322,6 +1322,7 @@ GameObject:
   - component: {fileID: 1084333347}
   - component: {fileID: 1084333346}
   - component: {fileID: 1084333345}
+  - component: {fileID: 1084333348}
   m_Layer: 5
   m_Name: BottomActionBar
   m_TagString: Untagged
@@ -1417,6 +1418,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1084333343}
   m_CullTransparentMesh: 1
+--- !u!114 &1084333348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1084333343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 493f61ca2575643219ff8e8bad60bb7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BottomActionBarController
+  selectionManager: {fileID: 1087376993}
 --- !u!1 &1087376992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,6 +1462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SelectionManager
   targetCamera: {fileID: 0}
   tapMaxMovement: 12
+  currentSelection: {fileID: 0}
 --- !u!4 &1087376994
 Transform:
   m_ObjectHideFlags: 0
@@ -1520,7 +1535,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Reset
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1759,7 +1774,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Clone
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1921,7 +1936,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1771427389}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1084333348}
+        m_TargetAssemblyTypeName: BottomActionBarController, Assembly-CSharp
+        m_MethodName: OnDeletePressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1771427389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,7 +2165,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Front
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

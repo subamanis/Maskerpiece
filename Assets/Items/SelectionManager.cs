@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class SelectionManager : MonoBehaviour
 {
     [SerializeField] private Camera targetCamera;
     [SerializeField] private float tapMaxMovement = 12f;
 
-    private Selectable currentSelection;
+    public Selectable currentSelection;
     private bool pointerActive;
     private bool pointerMoved;
     private bool pointerMultiTouch;
@@ -98,6 +99,10 @@ public class SelectionManager : MonoBehaviour
 
     private void HandleSelection(Vector2 screenPosition)
     {
+        // Don't select objects when the pointer is interacting with UI
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
         Vector3 worldPoint = targetCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, 0f));
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
         Selectable nextSelection = hit.collider != null ? hit.collider.GetComponentInParent<Selectable>() : null;
@@ -137,5 +142,14 @@ public class SelectionManager : MonoBehaviour
         }
 
         return count;
+    }
+
+    public void DeleteSelected()
+    {
+        if (currentSelection == null) return;
+
+        var toDelete = currentSelection.gameObject;
+        currentSelection = null;
+        Destroy(toDelete);
     }
 }
