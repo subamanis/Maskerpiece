@@ -265,3 +265,5 @@ sysinfo.txt
 .idea
 
 .vscode
+*_ButDontShipItWithYourGame
+*_DoNotShip
