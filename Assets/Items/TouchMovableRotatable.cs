@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +18,13 @@ public class TouchMovableRotatable : MonoBehaviour
     private float cachedZ;
     private int lastTouchCount;
     private Selectable selectable;
+    private Collider2D cachedCollider;
+    private Vector3 lastPosition;
+    private Vector3 lastScale;
+    private Quaternion lastRotation;
+    private bool hasLoggedAtRest;
+    private readonly Collider2D[] overlapResults = new Collider2D[16];
+    private const float RestEpsilon = 0.0001f;
 
     private enum TouchState
     {
@@ -29,6 +38,8 @@ public class TouchMovableRotatable : MonoBehaviour
     private void Awake()
     {
         selectable = GetComponent<Selectable>();
+        cachedCollider = GetComponent<Collider2D>();
+        CacheTransformState();
         if (targetCamera == null)
         {
             targetCamera = Camera.main;
@@ -47,6 +58,8 @@ public class TouchMovableRotatable : MonoBehaviour
             isMoving = false;
             isRotating = false;
             lastTouchCount = 0;
+            hasLoggedAtRest = false;
+            CacheTransformState();
             return;
         }
 
@@ -71,7 +84,22 @@ public class TouchMovableRotatable : MonoBehaviour
             isRotating = false;
         }
 
+        bool isTransformStable = IsTransformStable();
+        if (touchCount == 0 && !isMoving && !isRotating && isTransformStable)
+        {
+            if (!hasLoggedAtRest)
+            {
+                LogCollisionCheck();
+                hasLoggedAtRest = true;
+            }
+        }
+        else
+        {
+            hasLoggedAtRest = false;
+        }
+
         lastTouchCount = touchCount;
+        CacheTransformState();
     }
 
     private void HandleMove(TouchInfo touch)
@@ -220,6 +248,75 @@ public class TouchMovableRotatable : MonoBehaviour
                 return TouchState.Canceled;
             default:
                 return TouchState.Stationary;
+        }
+    }
+
+    private void CacheTransformState()
+    {
+        lastPosition = transform.position;
+        lastRotation = transform.rotation;
+        lastScale = transform.localScale;
+    }
+
+    private bool IsTransformStable()
+    {
+        float epsilonSqr = RestEpsilon * RestEpsilon;
+        if (Vector3.SqrMagnitude(transform.position - lastPosition) > epsilonSqr)
+        {
+            return false;
+        }
+
+        if (Quaternion.Angle(transform.rotation, lastRotation) > RestEpsilon)
+        {
+            return false;
+        }
+
+        if (Vector3.SqrMagnitude(transform.localScale - lastScale) > epsilonSqr)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void LogCollisionCheck()
+    {
+        string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        if (cachedCollider == null)
+        {
+            Debug.LogWarning($"[{timestamp}] No Collider2D found for {name}.");
+            return;
+        }
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.useTriggers = true;
+        filter.SetLayerMask(Physics2D.AllLayers);
+        filter.SetDepth(float.NegativeInfinity, float.PositiveInfinity);
+        int count = cachedCollider.Overlap(filter, overlapResults);
+        var collisions = new HashSet<string>();
+
+        for (int i = 0; i < count; i++)
+        {
+            Collider2D hit = overlapResults[i];
+            if (hit == null || hit == cachedCollider)
+            {
+                continue;
+            }
+
+            Selectable otherSelectable = hit.GetComponentInParent<Selectable>();
+            if (otherSelectable != null && otherSelectable != selectable)
+            {
+                collisions.Add(otherSelectable.name);
+            }
+        }
+
+        if (collisions.Count > 0)
+        {
+            Debug.Log($"[{timestamp}] Collisions: {string.Join(", ", collisions)}");
+        }
+        else
+        {
+            Debug.Log($"[{timestamp}] No collisions.");
         }
     }
 }
