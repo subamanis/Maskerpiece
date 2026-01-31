@@ -1130,8 +1130,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1202985769
-  m_SortingLayer: 2
+  m_SortingLayerID: -947461955
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 6cca9f8d5a937c042b00dd1f3f79bb23, type: 3}
@@ -1397,7 +1397,8 @@ MonoBehaviour:
   buttonContainer: {fileID: 1099310696}
   buttonTemplate: {fileID: 1440335197}
   spawnParent: {fileID: 1218589694}
-  spawnScale: 0.5
+  spawnScale: 0.3
+  spawnOffset: {x: 0, y: -0.8}
   purchaseSound: {fileID: 0}
   cantAffordSound: {fileID: 0}
 --- !u!114 &1087376997
@@ -1761,7 +1762,7 @@ Transform:
   m_GameObject: {fileID: 1218589693}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.27, y: 10.02, z: 0}
+  m_LocalPosition: {x: -3.78, y: 10.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
