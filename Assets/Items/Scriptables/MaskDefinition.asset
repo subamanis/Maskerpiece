@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aadb2478537a27408a47f687310f7e8, type: 3}
   m_Name: MaskDefinition
   m_EditorClassIdentifier: Assembly-CSharp::MaskDefinition
-  selectables:
-  - {fileID: 2703766985658138333, guid: d34473abaf5d59946b021003a85af557, type: 3}
-  - {fileID: 570569862620522384, guid: f99ca85d2562ebc41a6a6fdc4c4b3980, type: 3}
-  - {fileID: 8762224665176533727, guid: 4b66652d6e736fd4291a7d5d4b7836e7, type: 3}
+  masks:
+  - prefab: {fileID: 2703766985658138333, guid: d34473abaf5d59946b021003a85af557, type: 3}
+    price: 100
+  - prefab: {fileID: 570569862620522384, guid: f99ca85d2562ebc41a6a6fdc4c4b3980, type: 3}
+    price: 200
+  - prefab: {fileID: 8762224665176533727, guid: 4b66652d6e736fd4291a7d5d4b7836e7, type: 3}
+    price: 300

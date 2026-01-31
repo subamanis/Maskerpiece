@@ -27,14 +27,14 @@ public class MaskSpawner : MonoBehaviour
 
         buttonTemplate.SetActive(false);
 
-        foreach (var selectable in maskDefinition.Selectables)
+        foreach (var maskItem in maskDefinition.Masks)
         {
-            if (selectable == null) continue;
+            if (maskItem == null || maskItem.prefab == null) continue;
 
             GameObject buttonObj = Instantiate(buttonTemplate, buttonContainer);
             buttonObj.SetActive(true);
 
-            SpriteRenderer prefabSR = selectable.GetComponentInChildren<SpriteRenderer>();
+            SpriteRenderer prefabSR = maskItem.prefab.GetComponentInChildren<SpriteRenderer>();
             if (prefabSR != null && prefabSR.sprite != null)
             {
                 Image img = buttonObj.GetComponentInChildren<Image>();
@@ -48,18 +48,21 @@ public class MaskSpawner : MonoBehaviour
             Button btn = buttonObj.GetComponent<Button>();
             if (btn != null)
             {
-                Selectable capturedSelectable = selectable;
-                btn.onClick.AddListener(() => SpawnMask(capturedSelectable.gameObject));
+                MaskItem captured = maskItem;
+                btn.onClick.AddListener(() => TrySpawnMask(captured));
             }
         }
     }
 
-    void SpawnMask(GameObject prefab)
+    void TrySpawnMask(MaskItem maskItem)
     {
+        if (BudgetManager.Instance == null || !BudgetManager.Instance.TrySpend(maskItem.price))
+            return;
+
         Vector3 spawnPos = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 10f));
         spawnPos.z = 0f;
 
-        GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
+        GameObject instance = Instantiate(maskItem.prefab.gameObject, spawnPos, Quaternion.identity);
 
         if (spawnParent != null)
             instance.transform.SetParent(spawnParent, true);

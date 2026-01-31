@@ -1,10 +1,17 @@
 using UnityEngine;
 
+[System.Serializable]
+public class MaskItem
+{
+    public Selectable prefab;
+    public int price;
+}
+
 [CreateAssetMenu(fileName = "MaskDefinition", menuName = "Maskerpiece/MaskDefinition")]
 public class MaskDefinition : ScriptableObject
 {
     [SerializeField]
-    private Selectable[] selectables;
+    private MaskItem[] masks;
 
-    public Selectable[] Selectables => selectables;
+    public MaskItem[] Masks => masks;
 }
