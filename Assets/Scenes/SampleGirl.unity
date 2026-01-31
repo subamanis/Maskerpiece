@@ -1225,8 +1225,8 @@ MonoBehaviour:
   targetCamera: {fileID: 0}
   selectionManager: {fileID: 0}
   clampToBounds: 1
-  panMin: {x: -1, y: -4}
-  panMax: {x: 1, y: 4}
+  panMin: {x: -1.6, y: -4}
+  panMax: {x: 1.6, y: 4}
   minOrthographicSize: 1
   maxOrthographicSize: 5
 --- !u!1 &742792650 stripped
@@ -2027,6 +2027,7 @@ MonoBehaviour:
   targetCamera: {fileID: 0}
   tapMaxMovement: 12
   currentSelection: {fileID: 0}
+  centerDepth: 0
 --- !u!4 &1087376994
 Transform:
   m_ObjectHideFlags: 0

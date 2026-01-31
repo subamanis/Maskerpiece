@@ -29,7 +29,7 @@ public class CameraPanZoom : MonoBehaviour
 
         if (selectionManager == null)
         {
-            selectionManager = FindObjectOfType<SelectionManager>();
+            selectionManager = FindFirstObjectByType<SelectionManager>();
         }
 
         if (targetCamera != null)
