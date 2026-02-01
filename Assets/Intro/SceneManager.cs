@@ -114,7 +114,7 @@ public class SceneManager : MonoBehaviour
 
         yield return new WaitForSeconds(.2f);
 
-        introInner.gameObject.SetActive(true);
+        introInner.gameObject.SetActive(false);
         gameInner.gameObject.SetActive(true);
 
         yield return StartCoroutine(OpenCurtains());
@@ -242,6 +242,10 @@ public class SceneManager : MonoBehaviour
         {
             eachThingToDisable.gameObject.SetActive(false);
         }
+
+        introInner.gameObject.SetActive(true);
+
+        // HERE 
 
         yield return new WaitForSeconds(.2f);
 
