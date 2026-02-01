@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
+    [Header("InnterScenes")] public GameObject introInner;
+    public GameObject gameInner;
+    
     [Header("UI")]
     public GameObject startScreenPanel;
 
@@ -18,6 +21,8 @@ public class GameManager : MonoBehaviour
     public float stepInterval = 0.5f;
     public float startScale = 0.23f;
     public float endScale = 0.1f;
+    public float fromOffsetY = 0f;
+    public float toOffsetY = -2f;
 
     [Header("Curtains")]
     public Transform curtainLeft;
@@ -100,7 +105,7 @@ public class GameManager : MonoBehaviour
         if (flashManager != null)
             flashManager.StartFlashing();
 
-        yield return StartCoroutine(AnimateWalk(back1, back2, startScale, endScale));
+        yield return StartCoroutine(AnimateWalk(back1, back2, startScale, endScale, fromOffsetY, toOffsetY));
 
         if (flashManager != null)
             flashManager.StopFlashing();
@@ -108,6 +113,11 @@ public class GameManager : MonoBehaviour
         chatterSource.Stop();
 
         yield return StartCoroutine(CloseCurtains());
+        
+        introInner.SetActive(true);
+        gameInner.SetActive(true);
+
+        yield return StartCoroutine(OpenCurtains());
     }
 
     IEnumerator WalkGirlFrontRoutine()
@@ -117,10 +127,10 @@ public class GameManager : MonoBehaviour
 
         yield return StartCoroutine(OpenCurtains());
 
-        yield return StartCoroutine(AnimateWalk(front1, front2, endScale, startScale));
+        yield return StartCoroutine(AnimateWalk(front1, front2, endScale, startScale, toOffsetY, fromOffsetY));
     }
 
-    IEnumerator AnimateWalk(Sprite spriteA, Sprite spriteB, float fromScale, float toScale)
+    IEnumerator AnimateWalk(Sprite spriteA, Sprite spriteB, float fromScale, float toScale, float offsetXYtart, float offsetYEnd)
     {
         float walkTimer = 0f;
         float stepTimer = 0f;
@@ -137,7 +147,9 @@ public class GameManager : MonoBehaviour
 
             float t = Mathf.Clamp01(walkTimer / walkDuration);
             float currentScale = Mathf.Lerp(fromScale, toScale, t);
+            float currentY = Mathf.Lerp(offsetXYtart, offsetYEnd, t);
             introGirlRenderer.transform.localScale = Vector3.one * currentScale;
+            introGirlRenderer.transform.position = new Vector3(0f, currentY, 0f);
 
             if (stepTimer >= stepInterval)
             {

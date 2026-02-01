@@ -169,16 +169,6 @@ public class SelectionManager : MonoBehaviour
     {
         if (currentSelection == null) return;
 
-        MaskPurchase purchase = currentSelection.GetComponent<MaskPurchase>();
-        if (purchase != null && BudgetManager.Instance != null)
-        {
-            int refundAmount = purchase.RefundAmount;
-            if (refundAmount > 0)
-            {
-                BudgetManager.Instance.AddMoney(refundAmount);
-            }
-        }
-
         var toDelete = currentSelection.gameObject;
         currentSelection = null;
         Destroy(toDelete);
