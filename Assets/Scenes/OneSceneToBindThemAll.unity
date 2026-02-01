@@ -1972,7 +1972,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 6cca9f8d5a937c042b00dd1f3f79bb23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0db4f1c3949d5ca4090d2ad130653403, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2935,10 +2935,10 @@ MonoBehaviour:
   gameInner: {fileID: 505996087}
   startScreenPanel: {fileID: 7977050390378418960}
   introGirlRenderer: {fileID: 3362119415115974288}
-  front1: {fileID: 21300000, guid: 40e181c639a95364ab23eef86f32ae9c, type: 3}
-  front2: {fileID: 21300000, guid: f18ca8cb91a91784bb3aea0d50365a09, type: 3}
-  back1: {fileID: 21300000, guid: 01e3eded19f59eb489adbed1ac4269ff, type: 3}
-  back2: {fileID: 21300000, guid: a0132ae0871ba644bba209a70e78942a, type: 3}
+  front1: {fileID: 21300000, guid: 0db4f1c3949d5ca4090d2ad130653403, type: 3}
+  front2: {fileID: 21300000, guid: 30426cb999b812845aba854330374cbd, type: 3}
+  back1: {fileID: 21300000, guid: d0477c908310af84197e55144aa713ea, type: 3}
+  back2: {fileID: 21300000, guid: 9170c7bbf0e32b04eb80d51c4557fb59, type: 3}
   walkDuration: 4
   stepInterval: 0.5
   startScale: 0.23
