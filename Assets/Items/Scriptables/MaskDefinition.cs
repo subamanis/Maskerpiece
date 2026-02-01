@@ -4,7 +4,6 @@ using UnityEngine;
 public class MaskItem
 {
     public Selectable prefab;
-    public int price;
 }
 
 [CreateAssetMenu(fileName = "MaskDefinition", menuName = "Maskerpiece/MaskDefinition")]

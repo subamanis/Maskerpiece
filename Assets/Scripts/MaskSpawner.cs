@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class MaskSpawner : MonoBehaviour
 {
@@ -52,14 +51,6 @@ public class MaskSpawner : MonoBehaviour
                 }
             }
 
-            Transform priceTransform = buttonObj.transform.Find("Price");
-            if (priceTransform != null)
-            {
-                TextMeshProUGUI priceText = priceTransform.GetComponent<TextMeshProUGUI>();
-                if (priceText != null)
-                    priceText.text = $"${maskItem.price}";
-            }
-
             Button btn = buttonObj.GetComponent<Button>();
             if (btn != null)
             {
@@ -72,15 +63,6 @@ public class MaskSpawner : MonoBehaviour
 
     void TrySpawnMask(MaskItem maskItem)
     {
-        if (BudgetManager.Instance == null || !BudgetManager.Instance.CanAfford(maskItem.price))
-        {
-            if (cantAffordSound != null)
-                audioSource.PlayOneShot(cantAffordSound);
-            return;
-        }
-
-        BudgetManager.Instance.TrySpend(maskItem.price);
-
         if (purchaseSound != null)
             audioSource.PlayOneShot(purchaseSound);
 
@@ -93,13 +75,6 @@ public class MaskSpawner : MonoBehaviour
         spawnPos += offset;
 
         GameObject instance = Instantiate(maskItem.prefab.gameObject, spawnPos, Quaternion.identity);
-        MaskPurchase purchase = instance.GetComponent<MaskPurchase>();
-        if (purchase == null)
-        {
-            purchase = instance.AddComponent<MaskPurchase>();
-        }
-        purchase.SetRefundAmount(maskItem.price);
-
         SpriteRenderer instanceSR = instance.GetComponentInChildren<SpriteRenderer>();
         instanceSR.sortingOrder = nextSortingOrder;
 
