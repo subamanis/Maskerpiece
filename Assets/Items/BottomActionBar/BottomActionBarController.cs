@@ -10,6 +10,9 @@ public class BottomActionBarController : MonoBehaviour
     [SerializeField] private Button resetButton;
     [SerializeField] private Button upButton;
     [SerializeField] private Button downButton;
+
+    [Header("Restart")]
+    [SerializeField] private RestartConfirmPopup restartPopup;
     private Selectable currentSelection;
 
     private void Awake()
@@ -122,5 +125,24 @@ public class BottomActionBarController : MonoBehaviour
         selectionManager.GetAdjacentCollisionAvailability(currentSelection, out bool hasAbove, out bool hasBelow);
         if (upButton != null) upButton.interactable = hasAbove;
         if (downButton != null) downButton.interactable = hasBelow;
+    }
+
+    public void OnRestartPressed()
+    {
+        if (restartPopup == null)
+        {
+            Debug.LogWarning("RestartConfirmPopup reference not set.");
+            return;
+        }
+
+        restartPopup.Show(
+            "Restart?",
+            "Are you sure you want to restart?",
+            () =>
+            {
+                // For now only confirm works; we'll add initialization next
+                Debug.Log("Restart confirmed (TODO: initialize).");
+            }
+        );
     }
 }
