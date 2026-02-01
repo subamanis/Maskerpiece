@@ -2011,6 +2011,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6405432130292536635, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405432130292536635, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4270141950838957727, guid: 0601226b060a93345978b331234410db, type: 3}
+    - target: {fileID: 6405432130292536635, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405432130292536635, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405432130292536635, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7316813382689927231, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
       propertyPath: m_Spacing.y
       value: 80
