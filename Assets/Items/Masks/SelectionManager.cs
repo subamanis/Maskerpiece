@@ -165,6 +165,15 @@ public class SelectionManager : MonoBehaviour
         return count;
     }
 
+    public void ClearSelection()
+    {
+        if (currentSelection == null) return;
+
+        currentSelection.SetSelected(false);
+        currentSelection = null;
+        OnSelectionChanged?.Invoke(null);
+    }
+
     public void DeleteSelected()
     {
         if (currentSelection == null) return;
@@ -173,7 +182,6 @@ public class SelectionManager : MonoBehaviour
         currentSelection = null;
         Destroy(toDelete);
 
-        // 🔔 Notify listeners that nothing is selected
         OnSelectionChanged?.Invoke(null);
     }
 

@@ -3066,6 +3066,7 @@ MonoBehaviour:
   - {fileID: 747548559419837260}
   - {fileID: 1087376992}
   - {fileID: 41183303}
+  selectionManager: {fileID: 1087376993}
   curtainsSound: {fileID: 0}
   footstepSound: {fileID: 0}
   chatterSound: {fileID: 0}

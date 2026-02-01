@@ -29,6 +29,7 @@ public class SceneManager : MonoBehaviour
     [Header("Effects")] public FlashManager flashManager;
 
     [Header("Catwalk")] public GameObject[] thingsToDisable;
+    public SelectionManager selectionManager;
 
     [Header("Audio")] public AudioClip curtainsSound;
     public AudioClip footstepSound;
@@ -245,7 +246,8 @@ public class SceneManager : MonoBehaviour
 
         introInner.gameObject.SetActive(true);
 
-        // HERE 
+        if (selectionManager != null)
+            selectionManager.ClearSelection();
 
         yield return new WaitForSeconds(.2f);
 
