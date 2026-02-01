@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: f725f70ca4de00140a494bf5754d57e1
+guid: a0132ae0871ba644bba209a70e78942a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8251014003689214785
-    second: test-girl-1_0
+      213: -1468617235225215949
+    second: Back_2_0
   - first:
-      213: -1833575503978580006
-    second: test-girl-1_1
+      213: 6772073061493994934
+    second: Back_2_1
   - first:
-      213: -7623680559058542427
-    second: test-girl-1_2
+      213: -504964158175664534
+    second: Back_2_2
+  - first:
+      213: -354492194649640146
+    second: Back_2_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,17 +118,96 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: test-girl-1_0
+      name: Back_2_0
       rect:
         serializedVersion: 2
-        x: 350
-        y: 1175
+        x: 761
+        y: 2155
+        width: 40
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33c7267d76c6e9be0800000000000000
+      internalID: -1468617235225215949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_2_1
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 2163
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b57757c19c3bfd50800000000000000
+      internalID: 6772073061493994934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_2_2
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 155
+        width: 427
+        height: 1999
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a66a2a706c10ef8f0800000000000000
+      internalID: -504964158175664534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_2_3
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 1940
         width: 7
-        height: 12
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,52 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fbca459ba728e7d80800000000000000
-      internalID: -8251014003689214785
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: test-girl-1_1
-      rect:
-        serializedVersion: 2
-        x: 374
-        y: 1142
-        width: 41
-        height: 83
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ad7bf783bc4dd86e0800000000000000
-      internalID: -1833575503978580006
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: test-girl-1_2
-      rect:
-        serializedVersion: 2
-        x: 377
-        y: 131
-        width: 991
-        height: 2068
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5a0a34c6cee333690800000000000000
-      internalID: -7623680559058542427
+      spriteID: e2372462a37941bf0800000000000000
+      internalID: -354492194649640146
       vertices: []
       indices: 
       edges: []
@@ -188,7 +226,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -198,9 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      test-girl-1_0: -8251014003689214785
-      test-girl-1_1: -1833575503978580006
-      test-girl-1_2: -7623680559058542427
+      Back_2_0: -1468617235225215949
+      Back_2_1: 6772073061493994934
+      Back_2_2: -504964158175664534
+      Back_2_3: -354492194649640146
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -6,10 +6,12 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public GameObject startScreenPanel;
 
-    [Header("Girl Sprites")]
-    public GameObject girlFront;
-    public GameObject girlBack1;
-    public GameObject girlBack2;
+    [Header("Intro Girl")]
+    public SpriteRenderer introGirlRenderer;
+    public Sprite front1;
+    public Sprite front2;
+    public Sprite back1;
+    public Sprite back2;
 
     [Header("Walk Settings")]
     public float walkDuration = 3f;
@@ -33,11 +35,7 @@ public class GameManager : MonoBehaviour
 
     private AudioSource audioSource;
     private AudioSource chatterSource;
-    private bool isWalking;
-    private float walkTimer;
-    private bool showingGirl1 = true;
-    private float stepTimer;
-    private Transform activeGirl;
+    private Coroutine walkCoroutine;
 
     private Vector3 curtainLeftOpenPos;
     private Vector3 curtainRightOpenPos;
@@ -69,19 +67,29 @@ public class GameManager : MonoBehaviour
     public void OnStartButtonPressed()
     {
         startScreenPanel.SetActive(false);
-        girlFront.SetActive(false);
+        WalkGirlBack();
+    }
 
-        girlBack1.transform.localScale = Vector3.one * startScale;
-        girlBack2.transform.localScale = Vector3.one * startScale;
+    public void WalkGirlBack()
+    {
+        if (walkCoroutine != null)
+            StopCoroutine(walkCoroutine);
 
-        girlBack1.SetActive(true);
-        girlBack2.SetActive(false);
-        showingGirl1 = true;
+        walkCoroutine = StartCoroutine(WalkGirlBackRoutine());
+    }
 
-        activeGirl = girlBack1.transform;
-        isWalking = true;
-        walkTimer = 0f;
-        stepTimer = 0f;
+    public void WalkGirlFront()
+    {
+        if (walkCoroutine != null)
+            StopCoroutine(walkCoroutine);
+
+        walkCoroutine = StartCoroutine(WalkGirlFrontRoutine());
+    }
+
+    IEnumerator WalkGirlBackRoutine()
+    {
+        if (!EnsureIntroGirlReady(back1, back2))
+            yield break;
 
         if (chatterSound != null)
         {
@@ -91,60 +99,72 @@ public class GameManager : MonoBehaviour
 
         if (flashManager != null)
             flashManager.StartFlashing();
-    }
 
-    void Update()
-    {
-        if (!isWalking) return;
+        yield return StartCoroutine(AnimateWalk(back1, back2, startScale, endScale));
 
-        walkTimer += Time.deltaTime;
-        stepTimer += Time.deltaTime;
-
-        float t = walkTimer / walkDuration;
-        float currentScale = Mathf.Lerp(startScale, endScale, t);
-
-        girlBack1.transform.localScale = Vector3.one * currentScale;
-        girlBack2.transform.localScale = Vector3.one * currentScale;
-
-        if (stepTimer >= stepInterval)
-        {
-            stepTimer = 0f;
-            showingGirl1 = !showingGirl1;
-            girlBack1.SetActive(showingGirl1);
-            girlBack2.SetActive(!showingGirl1);
-
-            if (footstepSound != null)
-                audioSource.PlayOneShot(footstepSound);
-        }
-
-        if (walkTimer >= walkDuration)
-        {
-            isWalking = false;
-            OnWalkComplete();
-        }
-    }
-
-    void OnWalkComplete()
-    {
         if (flashManager != null)
             flashManager.StopFlashing();
 
-        girlBack1.SetActive(false);
-        girlBack2.SetActive(false);
-        StartCoroutine(CurtainTransition());
+        chatterSource.Stop();
+
+        yield return StartCoroutine(CloseCurtains());
     }
 
-    IEnumerator CurtainTransition()
+    IEnumerator WalkGirlFrontRoutine()
+    {
+        if (!EnsureIntroGirlReady(front1, front2))
+            yield break;
+
+        yield return StartCoroutine(OpenCurtains());
+
+        yield return StartCoroutine(AnimateWalk(front1, front2, endScale, startScale));
+    }
+
+    IEnumerator AnimateWalk(Sprite spriteA, Sprite spriteB, float fromScale, float toScale)
+    {
+        float walkTimer = 0f;
+        float stepTimer = 0f;
+        bool showingFirst = true;
+
+        introGirlRenderer.sprite = spriteA;
+        introGirlRenderer.gameObject.SetActive(true);
+        introGirlRenderer.transform.localScale = Vector3.one * fromScale;
+
+        while (walkTimer < walkDuration)
+        {
+            walkTimer += Time.deltaTime;
+            stepTimer += Time.deltaTime;
+
+            float t = Mathf.Clamp01(walkTimer / walkDuration);
+            float currentScale = Mathf.Lerp(fromScale, toScale, t);
+            introGirlRenderer.transform.localScale = Vector3.one * currentScale;
+
+            if (stepTimer >= stepInterval)
+            {
+                stepTimer = 0f;
+                showingFirst = !showingFirst;
+                introGirlRenderer.sprite = showingFirst ? spriteA : spriteB;
+
+                if (footstepSound != null)
+                    audioSource.PlayOneShot(footstepSound);
+            }
+
+            yield return null;
+        }
+
+        introGirlRenderer.transform.localScale = Vector3.one * toScale;
+    }
+
+    IEnumerator CloseCurtains()
     {
         if (curtainsSound != null)
             audioSource.PlayOneShot(curtainsSound);
 
         yield return StartCoroutine(MoveCurtains(curtainLeftOpenPos, curtainLeftClosedPos, curtainRightOpenPos, curtainRightClosedPos));
+    }
 
-        chatterSource.Stop();
-
-        yield return new WaitForSeconds(curtainClosedWait);
-
+    IEnumerator OpenCurtains()
+    {
         if (curtainsSound != null)
             audioSource.PlayOneShot(curtainsSound);
 
@@ -174,5 +194,22 @@ public class GameManager : MonoBehaviour
     void OnCurtainsOpened()
     {
         Debug.Log("Curtains opened - dressing room here");
+    }
+
+    bool EnsureIntroGirlReady(Sprite spriteA, Sprite spriteB)
+    {
+        if (introGirlRenderer == null)
+        {
+            Debug.LogWarning("Intro girl SpriteRenderer is not assigned.");
+            return false;
+        }
+
+        if (spriteA == null || spriteB == null)
+        {
+            Debug.LogWarning("Intro girl sprites are not assigned.");
+            return false;
+        }
+
+        return true;
     }
 }

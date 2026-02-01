@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: a879ab7048ad8174eb5ec0307f2f6d2a
+guid: 01e3eded19f59eb489adbed1ac4269ff
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6846245836923288714
-    second: curtain-left_0
+      213: 1564081329385972847
+    second: Back_1_0
+  - first:
+      213: 7084591527892701958
+    second: Back_1_1
+  - first:
+      213: 4465191536774634843
+    second: Back_1_2
+  - first:
+      213: -5692195876154641962
+    second: Back_1_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,17 +118,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: curtain-left_0
+      name: Back_1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 714
-        height: 1463
+        x: 761
+        y: 2155
+        width: 40
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +150,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 673c03d2faf3df0a0800000000000000
-      internalID: -6846245836923288714
+      spriteID: f642fd5aeabb4b510800000000000000
+      internalID: 1564081329385972847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_1_1
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 2163
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60359c67576815260800000000000000
+      internalID: 7084591527892701958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_1_2
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 153
+        width: 427
+        height: 2001
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5d588b8b0c87fd30800000000000000
+      internalID: 4465191536774634843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_1_3
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 1940
+        width: 7
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d1fbd952024101b0800000000000000
+      internalID: -5692195876154641962
       vertices: []
       indices: 
       edges: []
@@ -148,7 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      curtain-left_0: -6846245836923288714
+      Back_1_0: 1564081329385972847
+      Back_1_1: 7084591527892701958
+      Back_1_2: 4465191536774634843
+      Back_1_3: -5692195876154641962
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
