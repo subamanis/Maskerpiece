@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 4e024ca436297304b873ece4cfd1a520
+guid: 886b6039d9191264593670765fe61e1b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6950486346419376927
-    second: Untitled_Artwork 3_0
+      213: 2239469739656318708
+    second: Masks 8_0
+  - first:
+      213: 8975030569711452919
+    second: Masks 8_1
+  - first:
+      213: -5397228899284336375
+    second: Masks 8_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +52,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -126,13 +132,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Untitled_Artwork 3_0
+      name: Masks 8_0
       rect:
         serializedVersion: 2
-        x: 182
-        y: 756
-        width: 1271
-        height: 822
+        x: 322
+        y: 820
+        width: 952
+        height: 703
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +147,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1ec68714e79ea8f90800000000000000
-      internalID: -6950486346419376927
+      spriteID: 4fe837decd1341f10800000000000000
+      internalID: 2239469739656318708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Masks 8_1
+      rect:
+        serializedVersion: 2
+        x: 1394
+        y: 1307
+        width: 134
+        height: 254
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f24ceb50c6bd8c70800000000000000
+      internalID: 8975030569711452919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Masks 8_2
+      rect:
+        serializedVersion: 2
+        x: 1396
+        y: 811
+        width: 48
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9014fae69e03915b0800000000000000
+      internalID: -5397228899284336375
       vertices: []
       indices: 
       edges: []
@@ -151,7 +201,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +211,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Untitled_Artwork 3_0: -6950486346419376927
+      Masks 8_0: 2239469739656318708
+      Masks 8_1: 8975030569711452919
+      Masks 8_2: -5397228899284336375
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

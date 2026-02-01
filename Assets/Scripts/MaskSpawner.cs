@@ -35,12 +35,12 @@ public class MaskSpawner : MonoBehaviour
 
         foreach (var maskItem in maskDefinition.Masks)
         {
-            if (maskItem == null || maskItem.prefab == null) continue;
+            if (maskItem == null || maskItem.gameObject == null) continue;
 
             GameObject buttonObj = Instantiate(buttonTemplate, buttonContainer);
             buttonObj.SetActive(true);
 
-            SpriteRenderer prefabSR = maskItem.prefab.GetComponentInChildren<SpriteRenderer>();
+            SpriteRenderer prefabSR = maskItem.gameObject.GetComponentInChildren<SpriteRenderer>();
             if (prefabSR != null && prefabSR.sprite != null)
             {
                 Image img = buttonObj.GetComponentInChildren<Image>();
@@ -61,7 +61,7 @@ public class MaskSpawner : MonoBehaviour
         Destroy(buttonTemplate.gameObject);
     }
 
-    void TrySpawnMask(MaskItem maskItem)
+    void TrySpawnMask(Selectable maskItem)
     {
         if (purchaseSound != null)
             audioSource.PlayOneShot(purchaseSound);
@@ -74,7 +74,7 @@ public class MaskSpawner : MonoBehaviour
         Vector3 offset = new Vector3(spawnOffset.x, spawnOffset.y, 0f) * modIndex;
         spawnPos += offset;
 
-        GameObject instance = Instantiate(maskItem.prefab.gameObject, spawnPos, Quaternion.identity);
+        GameObject instance = Instantiate(maskItem.gameObject, spawnPos, Quaternion.identity);
         SpriteRenderer instanceSR = instance.GetComponentInChildren<SpriteRenderer>();
         instanceSR.sortingOrder = nextSortingOrder;
 

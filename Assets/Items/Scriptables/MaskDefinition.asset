@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: MaskDefinition
   m_EditorClassIdentifier: Assembly-CSharp::MaskDefinition
   masks:
-  - prefab: {fileID: 2703766985658138333, guid: d34473abaf5d59946b021003a85af557, type: 3}
-    price: 100
-  - prefab: {fileID: 570569862620522384, guid: f99ca85d2562ebc41a6a6fdc4c4b3980, type: 3}
-    price: 200
-  - prefab: {fileID: 8762224665176533727, guid: 4b66652d6e736fd4291a7d5d4b7836e7, type: 3}
-    price: 300
+  - {fileID: 2174404039982144861, guid: c581c28bed932614188f8eaeb605a0b0, type: 3}
+  - {fileID: 2174404039982144861, guid: f6d51742064127649b86dab88cdf1829, type: 3}
+  - {fileID: 2174404039982144861, guid: e2b538f1d83635c4eae0143f80702194, type: 3}
+  - {fileID: 2174404039982144861, guid: 2e45a2a6c0941704b9937cd29e34e76b, type: 3}
+  - {fileID: 2174404039982144861, guid: 90190deedfa4b8c4e94ae5a5c75d50fd, type: 3}
+  - {fileID: 2174404039982144861, guid: 5896ad9b998467f40ab16522864dfa02, type: 3}
+  - {fileID: 2174404039982144861, guid: 385a9215ede8d8140bd4b6b91259883e, type: 3}
+  - {fileID: 2174404039982144861, guid: 3149bfbf66a41b348885d4b8459ac1b8, type: 3}
+  - {fileID: 2174404039982144861, guid: e9621f746282bde4d88b3c25fc0c5804, type: 3}
+  - {fileID: 2174404039982144861, guid: 14ec7f274f1451e4495aab471b195894, type: 3}
+  - {fileID: 2174404039982144861, guid: fd1cfe35f45efe743813d88908f880d0, type: 3}
+  - {fileID: 2174404039982144861, guid: 959dfeca0abd12f4fb7824cbda0466a6, type: 3}
+  - {fileID: 2174404039982144861, guid: 15647793146f0e24082a8e0ea5f20fb7, type: 3}
+  - {fileID: 2174404039982144861, guid: 32f03b1ade04ea14eae6bc8a1a027f91, type: 3}

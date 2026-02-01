@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 496528904817691893}
   - component: {fileID: 512910188020105081}
   - component: {fileID: 1183435720018015896}
-  - component: {fileID: 2021725035352415994}
   - component: {fileID: 3957175884165635251}
+  - component: {fileID: -2032416525836938499}
   m_Layer: 6
   m_Name: MaskSprite
   m_TagString: Untagged
@@ -109,8 +109,31 @@ MonoBehaviour:
   targetCamera: {fileID: 0}
   rotationSpeed: 1
   scaleSpeed: 1
---- !u!61 &2021725035352415994
-BoxCollider2D:
+--- !u!114 &3957175884165635251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7195770635393813751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1530eefea32be4ea13379ca48cd9ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Selectable
+  spriteRenderer: {fileID: 0}
+  useGlow: 1
+  autoGlowColor: 1
+  glowColor: {r: 1, g: 1, b: 1, a: 1}
+  glowAlpha: 0.5
+  glowSize: 10
+  glowIntensity: 5
+  glowPulseAmplitude: 5
+  glowPulseSpeed: 1.2
+  dominantAlphaThreshold: 0.1
+  glowShader: {fileID: 4800000, guid: 8c3184614112ee949939b883bdd53da2, type: 3}
+--- !u!70 &-2032416525836938499
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -144,37 +167,5 @@ BoxCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &3957175884165635251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7195770635393813751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1530eefea32be4ea13379ca48cd9ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Selectable
-  spriteRenderer: {fileID: 0}
-  useGlow: 1
-  autoGlowColor: 1
-  glowColor: {r: 1, g: 1, b: 1, a: 1}
-  glowAlpha: 0.5
-  glowSize: 10
-  glowIntensity: 5
-  glowPulseAmplitude: 5
-  glowPulseSpeed: 1.2
-  dominantAlphaThreshold: 0.1
-  glowShader: {fileID: 4800000, guid: 8c3184614112ee949939b883bdd53da2, type: 3}
+  m_Direction: 0

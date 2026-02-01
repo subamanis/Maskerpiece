@@ -110,8 +110,8 @@ public class SceneManager : MonoBehaviour
 
         yield return StartCoroutine(CloseCurtains());
 
-        introInner.SetActive(true);
-        gameInner.SetActive(true);
+        introInner.gameObject.SetActive(true);
+        gameInner.gameObject.SetActive(true);
 
         yield return StartCoroutine(OpenCurtains());
     }
