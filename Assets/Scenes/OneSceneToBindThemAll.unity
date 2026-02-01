@@ -671,7 +671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraPanZoom
   targetCamera: {fileID: 0}
-  selectionManager: {fileID: 0}
+  selectionManager: {fileID: 1087376993}
   clampToBounds: 1
   panMin: {x: -1.6, y: -4}
   panMax: {x: 1.6, y: 4}
@@ -1637,12 +1637,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1591553792863604747, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1591553792863604747, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1591553792863604747, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1591553792863604747, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1591553792863604747, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1591553792863604747, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1863450694640066615, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
       propertyPath: m_Pivot.x
@@ -1723,6 +1739,10 @@ PrefabInstance:
     - target: {fileID: 1863450694640066615, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7316813382689927231, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
+      propertyPath: m_Spacing.y
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 8323749194625864513, guid: 76ecebde7d960cb43aa6aab1e5b9e2b1, type: 3}
       propertyPath: m_Name
