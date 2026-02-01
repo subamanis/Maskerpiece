@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Mono.Cecil;
 
 public class SceneManager : MonoBehaviour
 {
