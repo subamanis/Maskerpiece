@@ -5,36 +5,30 @@ public class SceneManager : MonoBehaviour
 {
     [Header("InnterScenes")] public GameObject introInner;
     public GameObject gameInner;
-    
-    [Header("UI")]
-    public GameObject startScreenPanel;
 
-    [Header("Intro Girl")]
-    public SpriteRenderer introGirlRenderer;
+    [Header("UI")] public GameObject startScreenPanel;
+
+    [Header("Intro Girl")] public SpriteRenderer introGirlRenderer;
     public Sprite front1;
     public Sprite front2;
     public Sprite back1;
     public Sprite back2;
 
-    [Header("Walk Settings")]
-    public float walkDuration = 3f;
+    [Header("Walk Settings")] public float walkDuration = 3f;
     public float stepInterval = 0.5f;
     public float startScale = 0.23f;
     public float endScale = 0.1f;
     public float fromOffsetY = 0f;
     public float toOffsetY = -2f;
 
-    [Header("Curtains")]
-    public Transform curtainLeft;
+    [Header("Curtains")] public Transform curtainLeft;
     public Transform curtainRight;
     public float curtainCloseDuration = 0.5f;
     public float curtainClosedWait = 1f;
 
-    [Header("Effects")]
-    public FlashManager flashManager;
+    [Header("Effects")] public FlashManager flashManager;
 
-    [Header("Audio")]
-    public AudioClip curtainsSound;
+    [Header("Audio")] public AudioClip curtainsSound;
     public AudioClip footstepSound;
     public AudioClip chatterSound;
 
@@ -46,6 +40,8 @@ public class SceneManager : MonoBehaviour
     private Vector3 curtainRightOpenPos;
     private Vector3 curtainLeftClosedPos;
     private Vector3 curtainRightClosedPos;
+
+    const float effectiveWidthTransitionCurtain = 0.3f;
 
     void Start()
     {
@@ -64,8 +60,8 @@ public class SceneManager : MonoBehaviour
             float leftWidth = curtainLeft.GetComponent<SpriteRenderer>().bounds.size.x;
             float rightWidth = curtainRight.GetComponent<SpriteRenderer>().bounds.size.x;
 
-            curtainLeftClosedPos = curtainLeftOpenPos + Vector3.right * (leftWidth * 0.75f);
-            curtainRightClosedPos = curtainRightOpenPos + Vector3.left * (rightWidth * 0.75f);
+            curtainLeftClosedPos = curtainLeftOpenPos + Vector3.right * (leftWidth * effectiveWidthTransitionCurtain);
+            curtainRightClosedPos = curtainRightOpenPos + Vector3.left * (rightWidth * effectiveWidthTransitionCurtain);
         }
     }
 
@@ -113,7 +109,7 @@ public class SceneManager : MonoBehaviour
         chatterSource.Stop();
 
         yield return StartCoroutine(CloseCurtains());
-        
+
         introInner.SetActive(true);
         gameInner.SetActive(true);
 
@@ -130,7 +126,8 @@ public class SceneManager : MonoBehaviour
         yield return StartCoroutine(AnimateWalk(front1, front2, endScale, startScale, toOffsetY, fromOffsetY));
     }
 
-    IEnumerator AnimateWalk(Sprite spriteA, Sprite spriteB, float fromScale, float toScale, float offsetXYtart, float offsetYEnd)
+    IEnumerator AnimateWalk(Sprite spriteA, Sprite spriteB, float fromScale, float toScale, float offsetXYtart,
+        float offsetYEnd)
     {
         float walkTimer = 0f;
         float stepTimer = 0f;
@@ -172,7 +169,8 @@ public class SceneManager : MonoBehaviour
         if (curtainsSound != null)
             audioSource.PlayOneShot(curtainsSound);
 
-        yield return StartCoroutine(MoveCurtains(curtainLeftOpenPos, curtainLeftClosedPos, curtainRightOpenPos, curtainRightClosedPos));
+        yield return StartCoroutine(MoveCurtains(curtainLeftOpenPos, curtainLeftClosedPos, curtainRightOpenPos,
+            curtainRightClosedPos));
     }
 
     IEnumerator OpenCurtains()
@@ -180,7 +178,8 @@ public class SceneManager : MonoBehaviour
         if (curtainsSound != null)
             audioSource.PlayOneShot(curtainsSound);
 
-        yield return StartCoroutine(MoveCurtains(curtainLeftClosedPos, curtainLeftOpenPos, curtainRightClosedPos, curtainRightOpenPos));
+        yield return StartCoroutine(MoveCurtains(curtainLeftClosedPos, curtainLeftOpenPos, curtainRightClosedPos,
+            curtainRightOpenPos));
 
         OnCurtainsOpened();
     }
