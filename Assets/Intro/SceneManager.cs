@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Mono.Cecil;
 
 public class SceneManager : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class SceneManager : MonoBehaviour
     public float curtainClosedWait = 1f;
 
     [Header("Effects")] public FlashManager flashManager;
+
+    [Header("Catwalk")] public GameObject[] thingsToDisable;
 
     [Header("Audio")] public AudioClip curtainsSound;
     public AudioClip footstepSound;
@@ -109,6 +112,8 @@ public class SceneManager : MonoBehaviour
         chatterSource.Stop();
 
         yield return StartCoroutine(CloseCurtains());
+
+        yield return new WaitForSeconds(.2f);
 
         introInner.gameObject.SetActive(true);
         gameInner.gameObject.SetActive(true);
@@ -222,5 +227,25 @@ public class SceneManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void OnLogoButtonClicked()
+    {
+       StartCoroutine(FinalizeGame());
+        
+    }
+
+    private IEnumerator FinalizeGame()
+    {
+        yield return StartCoroutine(CloseCurtains());
+
+        foreach (var eachThingToDisable in thingsToDisable)
+        {
+            eachThingToDisable.gameObject.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(.2f);
+
+        yield return StartCoroutine(OpenCurtains());
     }
 }
